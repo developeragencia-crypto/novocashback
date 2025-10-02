@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRightCircle,
@@ -155,13 +156,14 @@ const customStyles = `
 export default function WelcomeEnhancedPage() {
   const [currentScreen, setCurrentScreen] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
+  const [, setLocation] = useLocation();
   
   // Determina quando o usuário já viu a página de boas-vindas
   useEffect(() => {
     const hasSeenWelcome = localStorage.getItem('has_seen_welcome');
     if (hasSeenWelcome) {
       // Se já viu, redireciona para a página de login
-      window.location.href = "/auth/login";
+      setLocation("/auth/login");
     } else {
       setHasStarted(true);
     }
@@ -171,7 +173,7 @@ export default function WelcomeEnhancedPage() {
     // Marcar como visto para que não apareça novamente
     localStorage.setItem('has_seen_welcome', 'true');
     // Redirecionar para a página de login
-    window.location.href = "/auth/login";
+    setLocation("/auth/login");
   };
 
   // Telas com conteúdo
